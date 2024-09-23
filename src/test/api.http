@@ -1,0 +1,48 @@
+### Get all attractions
+GET http://localhost:8080/attractions
+Accept: application/json
+
+###Save tivoli
+POST http://localhost:8080/attractions/save
+Content-Type: application/json
+
+{
+  "name": "Tivoli",
+  "description": "A famous amusement park in Copenhagen.",
+  "city": "Copenhagen",
+  "tags": ["FORLYSTELSE"]
+}
+
+
+### Get a specific attraction by name
+GET http://localhost:8080/attractions/Tivoli
+Accept: application/json
+
+### Add Nyhavn
+POST http://localhost:8080/attractions/save
+Content-Type: application/json
+
+{
+  "name": "Nyhavn",
+  "description": "A beautiful waterfront area in Copenhagen, famous for its colorful houses.",
+  "city": "Copenhagen",
+  "tags": ["FORLYSTELSE", "HISTORIE"]
+}
+
+
+### Update Nyhavn
+POST http://localhost:8080/attractions/update
+Content-Type: application/json
+
+{
+  "name": "Nyhavn",
+  "description": "A historic waterfront area in Copenhagen, known for dining and entertainment.",
+  "city": "Copenhagen",
+  "tags": ["FORLYSTELSE", "HISTORIE", "NATUR"]
+}
+
+
+### Delete Nyhavn
+POST http://localhost:8080/attractions/delete/Nyhavn
+Content-Type: application/json
+
