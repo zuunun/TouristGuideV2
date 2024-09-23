@@ -30,7 +30,12 @@ public class TouristRepository {
     }
 
     // CREATE
-    public void saveAttraction(TouristAttraction t) {
+    public void saveAttraction(TouristAttraction t) throws IllegalArgumentException {
+        for(TouristAttraction existingAttraction : touristAttractions){
+            if(existingAttraction.getName().equals(t.getName())){
+                throw new IllegalArgumentException("Attraction already exists");
+            }
+        }
         touristAttractions.add(t);
     }
 

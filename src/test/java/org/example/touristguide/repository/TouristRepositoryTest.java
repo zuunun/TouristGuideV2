@@ -42,7 +42,7 @@ class TouristRepositoryTest {
 
     @Test
     void saveAttraction() {
-        TouristAttraction attraction = new TouristAttraction("Egenskiv skov", "en stor skov", "Copenhagen");
+        TouristAttraction attraction = new TouristAttraction("Egenskiv skov", "en stor skov", "Fyn");
         attraction.setTags(Arrays.asList(Tag.FAMOUS, Tag.HISTORY));
         repository.saveAttraction(attraction);
 
@@ -50,19 +50,39 @@ class TouristRepositoryTest {
         assertEquals(6, t.size());
         assertEquals("Egenskiv skov", t.get(5).getName());
 
+    }
 
+    @Test
+    void saveAttraction_Fail(){
+        TouristAttraction duplicateAttraction = new TouristAttraction("Tivoli Gardens", "En ikonisk forlystelsespark midt i København.", "Copenhagen");
+        repository.saveAttraction(duplicateAttraction);
+
+        List<TouristAttraction> t = repository.getAllAttractions();
+        assertEquals(6, t.size());
     }
 
     @Test
     void deleteAttraction() {
+        repository.deleteAttraction("Tivoli Gardens");
+        List<TouristAttraction> t = repository.getAllAttractions();
+        assertEquals(4, t.size());
+
     }
 
     @Test
     void getCities() {
+        List<String> cities = repository.getCities();
+        assertEquals(6, cities.size());
+        assertTrue(cities.contains("Copenhagen"));
+
+
     }
 
     @Test
     void getTags() {
+        List<String> tags = repository.getTags();
+        assertTrue(tags.contains("Monument"));
+        assertTrue(tags.contains("Family"));
     }
 
 
