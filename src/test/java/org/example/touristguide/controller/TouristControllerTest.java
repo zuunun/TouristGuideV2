@@ -22,7 +22,7 @@ class TouristControllerTest {
     private TouristAttraction touristAttraction = new TouristAttraction();
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mockMvc;//
 
     @MockBean
     private TouristService touristService;
