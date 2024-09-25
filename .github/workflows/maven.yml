@@ -8,28 +8,20 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-      # Step to check out the repository
       - uses: actions/checkout@v4
-
-      # Step to set up JDK 22
       - name: Set up JDK 22
         uses: actions/setup-java@v4.3.0
         with:
           java-version: '22'
           distribution: 'temurin'
           cache: maven
-
-      # Step to build with Maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-
-      # Step to run Qodana scan
       - name: Run Qodana
         uses: JetBrains/qodana-action@v2024.1
         with:
-          token: ${{ secrets.QODANA_TOKEN }}  # This references the token stored in your repository secrets
-          linter: jetbrains/qodana-jvm:2024.1  # Optional: specify the linter, if required for JVM projects
+          github-token: ${{ secrets.GITHUB_TOKEN }}  # Your GitHub token for repo access
+          qodana-token: ${{ secrets.QODANA_TOKEN }}   # Your Qodana access token
