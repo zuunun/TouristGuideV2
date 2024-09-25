@@ -12,8 +12,7 @@ public enum Tag {
     FAMOUS("Famous Landmark");
 
 
-
-    private String displayName;
+    private final String displayName;
 
     Tag(String displayName) {
         this.displayName = displayName;
