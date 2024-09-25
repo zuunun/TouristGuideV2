@@ -18,7 +18,6 @@ class TouristRepositoryTest {
         assertEquals(5, touristAttractions.size());
     }
 
-
     @Test
     void getAttractionByName_SUCCES() {
         TouristAttraction attraction = repository.getAttractionByName("Tivoli Gardens");
@@ -29,7 +28,7 @@ class TouristRepositoryTest {
     @Test
     void getAttractionByName_FAIL() {
         TouristAttraction attraction = repository.getAttractionByName("KEA");
-        assertNotNull(attraction);
+        assertNull(attraction);  // Expecting null since "KEA" doesn't exist
     }
 
     @Test
@@ -38,7 +37,6 @@ class TouristRepositoryTest {
         attraction.setDescription("En ny verden");
         assertEquals("En ny verden", attraction.getDescription());
     }
-
 
     @Test
     void saveAttraction() {
@@ -49,16 +47,22 @@ class TouristRepositoryTest {
         List<TouristAttraction> t = repository.getAllAttractions();
         assertEquals(6, t.size());
         assertEquals("Egenskiv skov", t.get(5).getName());
-
     }
 
     @Test
-    void saveAttraction_Fail(){
+    void saveAttraction_Fail() {
+        // Attempting to save a duplicate attraction
         TouristAttraction duplicateAttraction = new TouristAttraction("Tivoli Gardens", "En ikonisk forlystelsespark midt i København.", "Copenhagen");
-        repository.saveAttraction(duplicateAttraction);
+
+        // Expecting an exception to be thrown for duplicate save
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            repository.saveAttraction(duplicateAttraction);
+        });
+
+        assertEquals("Attraction already exists", exception.getMessage());
 
         List<TouristAttraction> t = repository.getAllAttractions();
-        assertEquals(6, t.size());
+        assertEquals(5, t.size());  // Ensure the count remains unchanged
     }
 
     @Test
@@ -66,7 +70,6 @@ class TouristRepositoryTest {
         repository.deleteAttraction("Tivoli Gardens");
         List<TouristAttraction> t = repository.getAllAttractions();
         assertEquals(4, t.size());
-
     }
 
     @Test
@@ -74,8 +77,6 @@ class TouristRepositoryTest {
         List<String> cities = repository.getCities();
         assertEquals(6, cities.size());
         assertTrue(cities.contains("Copenhagen"));
-
-
     }
 
     @Test
@@ -84,6 +85,4 @@ class TouristRepositoryTest {
         assertTrue(tags.contains("Monument"));
         assertTrue(tags.contains("Family"));
     }
-
-
 }
