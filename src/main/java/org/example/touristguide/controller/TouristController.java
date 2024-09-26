@@ -41,7 +41,7 @@ public class TouristController {
         model.addAttribute("tags", tags);
         return "tags";
     }
-//
+
 
     @GetMapping("/add")
     public String addAttraction(Model model) {
