@@ -18,9 +18,7 @@
     </thead>
     <tbody>
     <tr th:each="touristattraction : ${attractions}">
-        <td>
-            <a th:href="@{/{name}(name=${touristattraction.name})}" th:text="${touristattraction.name}"></a>
-        </td>
+        <td th:text="${touristattraction.name}"></td> <!-- Display name as text -->
         <td th:text="${touristattraction.description}"></td>
         <td th:text="${touristattraction.city}"></td>
         <td>
@@ -45,3 +43,4 @@
 
 </body>
 </html>
+
