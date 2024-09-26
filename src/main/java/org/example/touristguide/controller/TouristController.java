@@ -27,9 +27,10 @@ public class TouristController {
     }
 
     @GetMapping("/{name}")
-    @ResponseBody // This returns a JSON response
-    public TouristAttraction getAttractionByName(@PathVariable String name) {
-        return touristService.getAttractionByName(name);
+    public String getAttractionByName(@PathVariable String name, Model model) {
+        TouristAttraction touristAttraction = touristService.getAttractionByName(name);
+        model.addAttribute("attraction", touristAttraction);
+        return "attractionList";
     }
 
     @GetMapping("/attractions/{name}/tags")

@@ -1,5 +1,6 @@
 package org.example.touristguide.controller;
 
+import org.example.touristguide.model.Tag;
 import org.example.touristguide.model.TouristAttraction;
 import org.example.touristguide.service.TouristService;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
+
+import java.util.Arrays;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
@@ -37,6 +40,8 @@ class TouristControllerTest {
 
 //    @Test
 //    void getAttractionByName() throws Exception {
+//        // Her antager vi, at touristService returnerer den hardcodede attraction
+//        // Antag at vi har mocket service til at returnere den hardcodede attraction
 //        mockMvc.perform(get("/attractions/LEGOLAND"))
 //                .andExpect(status().isOk())
 //                .andExpect(view().name("attractionDetails"))
@@ -45,12 +50,13 @@ class TouristControllerTest {
 //
 //    @Test
 //    void getAttractionTags() throws Exception {
+//        // Her antager vi at vi også mocker tags
+//        touristAttraction.setTags(Arrays.asList(Tag.AMUSEMENT_PARK, Tag.FAMILY)); // Tilføj tags
+//        // Mock service til at returnere attraction med tags
 //        mockMvc.perform(get("/attractions/LEGOLAND/tags"))
 //                .andExpect(status().isOk())
 //                .andExpect(view().name("tags"));
-//
 //    }
-
     @Test
     void addAttraction() throws Exception {
         mockMvc.perform(get("/attractions/add"))
