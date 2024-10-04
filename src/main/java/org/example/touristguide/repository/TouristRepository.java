@@ -1,5 +1,6 @@
 package org.example.touristguide.repository;
 
+import org.example.touristguide.model.City;
 import org.example.touristguide.model.Tag;
 import org.example.touristguide.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
@@ -11,19 +12,29 @@ public class TouristRepository {
     final private List<TouristAttraction> touristAttractions = new ArrayList<>();
 
     public TouristRepository() {
-        TouristAttraction t1 = new TouristAttraction("Den Lille Havfrue", "En af Danmarks mest kendte monumenter ved Langelinie i København.", "Copenhagen");
-        t1.setTags(Arrays.asList(Tag.MONUMENT, Tag.FAMOUS));
+        TouristAttraction t1 = new TouristAttraction("Pyramids of Giza",
+                "One of the Seven Wonders of the World and a symbol of ancient Egypt.",
+                City.CAIRO.getDisplayName());
+        t1.setTags(Arrays.asList(Tag.MONUMENT, Tag.HISTORY));
 
-        TouristAttraction t2 = new TouristAttraction("Tivoli Gardens", "En ikonisk forlystelsespark midt i København.", "Copenhagen");
-        t2.setTags(Arrays.asList(Tag.AMUSEMENT_PARK, Tag.FAMILY));
+        TouristAttraction t2 = new TouristAttraction("Luxor Temple",
+                "A magnificent temple dedicated to the Egyptian god Amun.",
+                City.LUXOR.getDisplayName());
+        t2.setTags(Arrays.asList(Tag.HISTORY, Tag.UNESCO));
 
-        TouristAttraction t3 = new TouristAttraction("Roskilde Domkirke", "Danmarks kongelige begravelseskirke, et UNESCO verdensarv.", "Roskilde");
-        t3.setTags(Arrays.asList(Tag.HISTORY, Tag.UNESCO));
+        TouristAttraction t3 = new TouristAttraction("Egyptian Museum",
+                "Houses many important artifacts from ancient Egypt.",
+                City.CAIRO.getDisplayName());
+        t3.setTags(Arrays.asList(Tag.MUSEUM, Tag.FAMOUS));
 
-        TouristAttraction t4 = new TouristAttraction("LEGOLAND", "En verdensberømt temapark baseret på LEGO.", "Billund");
-        t4.setTags(Arrays.asList(Tag.AMUSEMENT_PARK, Tag.FAMILY));
+        TouristAttraction t4 = new TouristAttraction("Aswan Dam",
+                "A large dam that creates a lake and controls the Nile.",
+                City.ASWAN.getDisplayName());
+        t4.setTags(Arrays.asList(Tag.HISTORY, Tag.NATURE));
 
-        TouristAttraction t5 = new TouristAttraction("Skagen", "Et smukt natursted, hvor Skagerrak og Kattegat mødes.", "Skagen");
+        TouristAttraction t5 = new TouristAttraction("Red Sea",
+                "A beautiful coastline and a popular diving area.",
+                City.ALEXANDRIA.getDisplayName());
         t5.setTags(Arrays.asList(Tag.NATURE, Tag.BEACH));
 
         Collections.addAll(touristAttractions, t1, t2, t3, t4, t5);

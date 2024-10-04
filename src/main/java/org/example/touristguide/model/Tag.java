@@ -11,7 +11,6 @@ public enum Tag {
     UNESCO("UNESCO World Heritage"),
     FAMOUS("Famous Landmark");
 
-
     private final String displayName;
 
     Tag(String displayName) {
@@ -22,3 +21,5 @@ public enum Tag {
         return displayName;
     }
 }
+
+
