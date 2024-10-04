@@ -6,25 +6,24 @@ import java.util.List;
 public class TouristAttraction {
     private String name;
     private String description;
-    private String city;
+    private List<City> cities;
     private List<Tag> tags = new ArrayList<>();
 
     public TouristAttraction() {
 
     }
 
-    public TouristAttraction(String name, String description, String city) {
+    public TouristAttraction(String name, String description) {
         this.name = name;
         this.description = description;
-        this.city = city;
     }
 
-    public String getCity() {
-        return city;
+    public List<City> getCities() {
+        return cities;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCity(List<City> cities) {
+        this.cities = cities;
     }
 
     public String getName() {

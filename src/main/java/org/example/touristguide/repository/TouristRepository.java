@@ -13,28 +13,28 @@ public class TouristRepository {
 
     public TouristRepository() {
         TouristAttraction t1 = new TouristAttraction("Pyramids of Giza",
-                "One of the Seven Wonders of the World and a symbol of ancient Egypt.",
-                City.CAIRO.getDisplayName());
+                "One of the Seven Wonders of the World and a symbol of ancient Egypt.");
+        t1.setCity(Arrays.asList(City.CAIRO)); // Set cities as a list
         t1.setTags(Arrays.asList(Tag.MONUMENT, Tag.HISTORY));
 
         TouristAttraction t2 = new TouristAttraction("Luxor Temple",
-                "A magnificent temple dedicated to the Egyptian god Amun.",
-                City.LUXOR.getDisplayName());
+                "A magnificent temple dedicated to the Egyptian god Amun.");
+        t2.setCity(Arrays.asList(City.LUXOR));
         t2.setTags(Arrays.asList(Tag.HISTORY, Tag.UNESCO));
 
         TouristAttraction t3 = new TouristAttraction("Egyptian Museum",
-                "Houses many important artifacts from ancient Egypt.",
-                City.CAIRO.getDisplayName());
+                "Houses many important artifacts from ancient Egypt.");
+        t3.setCity(Arrays.asList(City.CAIRO));
         t3.setTags(Arrays.asList(Tag.MUSEUM, Tag.FAMOUS));
 
         TouristAttraction t4 = new TouristAttraction("Aswan Dam",
-                "A large dam that creates a lake and controls the Nile.",
-                City.ASWAN.getDisplayName());
+                "A large dam that creates a lake and controls the Nile.");
+        t4.setCity(Arrays.asList(City.ASWAN));
         t4.setTags(Arrays.asList(Tag.HISTORY, Tag.NATURE));
 
         TouristAttraction t5 = new TouristAttraction("Red Sea",
-                "A beautiful coastline and a popular diving area.",
-                City.ALEXANDRIA.getDisplayName());
+                "A beautiful coastline and a popular diving area.");
+        t5.setCity(Arrays.asList(City.ALEXANDRIA));
         t5.setTags(Arrays.asList(Tag.NATURE, Tag.BEACH));
 
         Collections.addAll(touristAttractions, t1, t2, t3, t4, t5);
@@ -42,8 +42,8 @@ public class TouristRepository {
 
     // CREATE
     public void saveAttraction(TouristAttraction t) throws IllegalArgumentException {
-        for(TouristAttraction existingAttraction : touristAttractions){
-            if(existingAttraction.getName().equals(t.getName())){
+        for (TouristAttraction existingAttraction : touristAttractions) {
+            if (existingAttraction.getName().equals(t.getName())) {
                 throw new IllegalArgumentException("Attraction already exists");
             }
         }
@@ -81,7 +81,7 @@ public class TouristRepository {
 
     public List<String> getCities() {
         List<String> cities = new ArrayList<>();
-        Collections.addAll(cities, "Aalborg", "Copenhagen", "Herning", "Holstebro", "Aarhus", "Billund");
+        Collections.addAll(cities, "Cairo", "Luxor", "Alexandria", "Aswan");
         return cities;
     }
 
@@ -99,7 +99,7 @@ public class TouristRepository {
         for (TouristAttraction attraction : touristAttractions) {
             if (attraction.getName().equals(updatedAttraction.getName())) {
                 attraction.setDescription(updatedAttraction.getDescription());
-                attraction.setCity(updatedAttraction.getCity());
+                attraction.setCity(updatedAttraction.getCities());
                 attraction.setTags(updatedAttraction.getTags());
                 return; // Add return to exit once updated
             }
