@@ -15,12 +15,12 @@ class TouristRepositoryTest {
     @Test
     void getAllAttractions() {
         List<TouristAttraction> touristAttractions = repository.getAllAttractions();
-        assertEquals(7, touristAttractions.size()); // Update the expected size to 7
+        assertEquals(7, touristAttractions.size());
     }
 
     @Test
     void getAttractionByName_SUCCESS() {
-        TouristAttraction attraction = repository.getAttractionByName("Pyramids of Giza"); // Update the name to match the new attractions
+        TouristAttraction attraction = repository.getAttractionByName("Pyramids of Giza");
         assertNotNull(attraction);
         assertEquals("Pyramids of Giza", attraction.getName());
     }
@@ -28,14 +28,14 @@ class TouristRepositoryTest {
     @Test
     void getAttractionByName_FAIL() {
         TouristAttraction attraction = repository.getAttractionByName("KEA");
-        assertNull(attraction);  // Expecting null since "KEA" doesn't exist
+        assertNull(attraction);  
     }
 
     @Test
     void updateAttraction() {
         TouristAttraction attraction = new TouristAttraction("Pyramids of Giza", "The Great Pyramids", "Giza");
         attraction.setDescription("A stunning view of the ancient structures.");
-        repository.updateAttraction(attraction); // Update the attraction in the repository
+        repository.updateAttraction(attraction);
 
         TouristAttraction updatedAttraction = repository.getAttractionByName("Pyramids of Giza");
         assertEquals("A stunning view of the ancient structures.", updatedAttraction.getDescription());
