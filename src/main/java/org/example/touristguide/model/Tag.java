@@ -2,14 +2,18 @@ package org.example.touristguide.model;
 
 public enum Tag {
     AMUSEMENT_PARK("Amusement Park"),
-    FAMILY("Family"),
+    ARCHITECTURE("Architecture"),
     MUSEUM("Museum"),
-    NATURE("Nature"),
     HISTORY("History"),
-    BEACH("Beach"),
+    ANCIENT("Ancient"),
     MONUMENT("Monument"),
     UNESCO("UNESCO World Heritage"),
-    FAMOUS("Famous Landmark");
+    FAMOUS("Famous Landmark"),
+    TOMBS("Tombs"),
+    TEMPLE("Temple"),
+    FORTRESS("Fortress");
+
+
 
     private final String displayName;
 

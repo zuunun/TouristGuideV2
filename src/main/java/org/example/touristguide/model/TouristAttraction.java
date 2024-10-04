@@ -6,26 +6,23 @@ import java.util.List;
 public class TouristAttraction {
     private String name;
     private String description;
-    private List<City> cities;
-    private List<Tag> tags = new ArrayList<>();
+    private String city;
+    private List<Tag> tags;
 
+    // Default constructor
     public TouristAttraction() {
-
     }
 
-    public TouristAttraction(String name, String description) {
+    // Parameterized constructor
+    public TouristAttraction(String name, String description, String city) {
         this.name = name;
         this.description = description;
+        this.city = city;
+        this.tags = new ArrayList<>();
+
     }
 
-    public List<City> getCities() {
-        return cities;
-    }
-
-    public void setCity(List<City> cities) {
-        this.cities = cities;
-    }
-
+    // Getter and setter methods
     public String getName() {
         return name;
     }
@@ -42,19 +39,20 @@ public class TouristAttraction {
         this.description = description;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public List<Tag> getTags() {
         return tags;
     }
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
-    }
-
-    @Override
-    public String toString() {
-        return
-                name + '\'' +
-                        ", " + description;
     }
 }
 
