@@ -78,7 +78,7 @@ public class TouristRepository {
 
     public List<String> getCities() {
         List<String> cities = new ArrayList<>();
-        Collections.addAll(cities, "Aalborg", "Copenhagen", "Herning", "Holstebro", "Aarhus", "Billund");
+        Collections.addAll(cities, "Cairo", "Alexandria", "Luxor", "Aswan", "Giza");
         return cities;
     }
 

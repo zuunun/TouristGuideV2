@@ -15,14 +15,14 @@ class TouristRepositoryTest {
     @Test
     void getAllAttractions() {
         List<TouristAttraction> touristAttractions = repository.getAllAttractions();
-        assertEquals(5, touristAttractions.size());
+        assertEquals(7, touristAttractions.size()); // Update the expected size to 7
     }
 
     @Test
-    void getAttractionByName_SUCCES() {
-        TouristAttraction attraction = repository.getAttractionByName("Tivoli Gardens");
+    void getAttractionByName_SUCCESS() {
+        TouristAttraction attraction = repository.getAttractionByName("Pyramids of Giza"); // Update the name to match the new attractions
         assertNotNull(attraction);
-        assertEquals("Tivoli Gardens", attraction.getName());
+        assertEquals("Pyramids of Giza", attraction.getName());
     }
 
     @Test
@@ -33,26 +33,29 @@ class TouristRepositoryTest {
 
     @Test
     void updateAttraction() {
-        TouristAttraction attraction = new TouristAttraction("LEGOLAND", "En verdensberømt temapark baseret på LEGO.", "Billund");
-        attraction.setDescription("En ny verden");
-        assertEquals("En ny verden", attraction.getDescription());
+        TouristAttraction attraction = new TouristAttraction("Pyramids of Giza", "The Great Pyramids", "Giza");
+        attraction.setDescription("A stunning view of the ancient structures.");
+        repository.updateAttraction(attraction); // Update the attraction in the repository
+
+        TouristAttraction updatedAttraction = repository.getAttractionByName("Pyramids of Giza");
+        assertEquals("A stunning view of the ancient structures.", updatedAttraction.getDescription());
     }
 
     @Test
     void saveAttraction() {
-        TouristAttraction attraction = new TouristAttraction("Egenskiv skov", "en stor skov", "Fyn");
-        attraction.setTags(Arrays.asList(Tag.FAMOUS, Tag.HISTORY));
+        TouristAttraction attraction = new TouristAttraction("The Sphinx", "A limestone statue of a reclining sphinx", "Giza");
+        attraction.setTags(Arrays.asList(Tag.HISTORY, Tag.MONUMENT));
         repository.saveAttraction(attraction);
 
         List<TouristAttraction> t = repository.getAllAttractions();
-        assertEquals(6, t.size());
-        assertEquals("Egenskiv skov", t.get(5).getName());
+        assertEquals(8, t.size());
+        assertEquals("The Sphinx", t.get(7).getName());
     }
 
     @Test
     void saveAttraction_Fail() {
         // Attempting to save a duplicate attraction
-        TouristAttraction duplicateAttraction = new TouristAttraction("Tivoli Gardens", "En ikonisk forlystelsespark midt i København.", "Copenhagen");
+        TouristAttraction duplicateAttraction = new TouristAttraction("Pyramids of Giza", "The iconic pyramids built as tombs for ancient Pharaohs.", "Giza");
 
         // Expecting an exception to be thrown for duplicate save
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -62,27 +65,27 @@ class TouristRepositoryTest {
         assertEquals("Attraction already exists", exception.getMessage());
 
         List<TouristAttraction> t = repository.getAllAttractions();
-        assertEquals(5, t.size());  // Ensure the count remains unchanged
+        assertEquals(7, t.size());
     }
 
     @Test
     void deleteAttraction() {
-        repository.deleteAttraction("Tivoli Gardens");
+        repository.deleteAttraction("Pyramids of Giza");
         List<TouristAttraction> t = repository.getAllAttractions();
-        assertEquals(4, t.size());
+        assertEquals(6, t.size());
     }
 
     @Test
     void getCities() {
         List<String> cities = repository.getCities();
-        assertEquals(6, cities.size());
-        assertTrue(cities.contains("Copenhagen"));
+        assertEquals(5, cities.size());
+        assertTrue(cities.contains("Cairo"));
     }
 
     @Test
     void getTags() {
         List<String> tags = repository.getTags();
         assertTrue(tags.contains("Monument"));
-        assertTrue(tags.contains("Family"));
+        assertTrue(tags.contains("History"));
     }
 }
