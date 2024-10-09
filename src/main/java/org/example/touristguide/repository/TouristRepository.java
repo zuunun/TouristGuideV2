@@ -12,25 +12,25 @@ public class TouristRepository {
 
     public TouristRepository() {
         // Tourist attractions in Egypt
-        TouristAttraction t1 = new TouristAttraction("Pyramids of Giza", "The iconic pyramids built as tombs for ancient Pharaohs.", "Giza");
+        TouristAttraction t1 = new TouristAttraction(1L,"Pyramids of Giza", "The iconic pyramids built as tombs for ancient Pharaohs.", "Giza");
         t1.setTags(Arrays.asList(Tag.HISTORY, Tag.UNESCO, Tag.MONUMENT));
 
-        TouristAttraction t2 = new TouristAttraction("Egyptian Museum", "Houses an extensive collection of ancient Egyptian antiquities.", "Cairo");
+        TouristAttraction t2 = new TouristAttraction(2L,"Egyptian Museum", "Houses an extensive collection of ancient Egyptian antiquities.", "Cairo");
         t2.setTags(Arrays.asList(Tag.MUSEUM,Tag.HISTORY,Tag.FAMOUS));
 
-        TouristAttraction t3 = new TouristAttraction("Luxor Temple", "A large Ancient Egyptian temple complex located on the east bank of the Nile.", "Luxor");
+        TouristAttraction t3 = new TouristAttraction(3L,"Luxor Temple", "A large Ancient Egyptian temple complex located on the east bank of the Nile.", "Luxor");
         t3.setTags(Arrays.asList( Tag.HISTORY,Tag.TEMPLE, Tag.ANCIENT));
 
-        TouristAttraction t4 = new TouristAttraction("The Valley of the Kings", "The burial site of many ancient Egyptian Pharaohs.", "Luxor");
+        TouristAttraction t4 = new TouristAttraction(4L,"The Valley of the Kings", "The burial site of many ancient Egyptian Pharaohs.", "Luxor");
         t4.setTags(Arrays.asList( Tag.HISTORY, Tag.UNESCO,Tag.TOMBS));
 
-        TouristAttraction t5 = new TouristAttraction("Abu Simbel", "Two massive rock temples built during the reign of Pharaoh Ramses II.", "Aswan");
+        TouristAttraction t5 = new TouristAttraction(5L,"Abu Simbel", "Two massive rock temples built during the reign of Pharaoh Ramses II.", "Aswan");
         t5.setTags(Arrays.asList( Tag.HISTORY,Tag.UNESCO, Tag.TEMPLE));
 
-        TouristAttraction t6 = new TouristAttraction("Cairo Citadel", "A medieval Islamic fortification located in Cairo.", "Cairo");
+        TouristAttraction t6 = new TouristAttraction(6L,"Cairo Citadel", "A medieval Islamic fortification located in Cairo.", "Cairo");
         t6.setTags(Arrays.asList(Tag.HISTORY, Tag.FORTRESS, Tag.ARCHITECTURE));
 
-        TouristAttraction t7 = new TouristAttraction("Karnak Temple", "A massive temple complex dedicated to the Theban triad of Amun, Mut, and Khonsu.", "Luxor");
+        TouristAttraction t7 = new TouristAttraction(7L,"Karnak Temple", "A massive temple complex dedicated to the Theban triad of Amun, Mut, and Khonsu.", "Luxor");
         t7.setTags(Arrays.asList(Tag.HISTORY, Tag.TEMPLE, Tag.ANCIENT ));
 
         //add
@@ -50,6 +50,15 @@ public class TouristRepository {
     // READ
     public List<TouristAttraction> getAllAttractions() {
         return touristAttractions;
+    }
+
+    public TouristAttraction getAttractionById(String id){
+        for(TouristAttraction attraction : touristAttractions){
+            if(attraction.getAttractionId().equals(id)){
+                return attraction;
+            }
+        }
+        return null;
     }
 
     public TouristAttraction getAttractionByName(String name) {
