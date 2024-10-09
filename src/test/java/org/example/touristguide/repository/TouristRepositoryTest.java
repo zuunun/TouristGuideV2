@@ -28,7 +28,7 @@ class TouristRepositoryTest {
     @Test
     void getAttractionByName_FAIL() {
         TouristAttraction attraction = repository.getAttractionByName("KEA");
-        assertNull(attraction);  
+        assertNull(attraction);
     }
 
     @Test

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TouristAttraction {
+    private Long attractionId;
     private String name;
     private String description;
     private String city;
