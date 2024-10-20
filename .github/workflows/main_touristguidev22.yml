@@ -51,4 +51,4 @@ jobs:
           app-name: 'touristGuideV22'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9832111481694CBCA5E23103669AA309 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8706AE0A2CD94A28949E1D04A3A548A7 }}
