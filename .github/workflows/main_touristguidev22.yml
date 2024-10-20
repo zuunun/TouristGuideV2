@@ -23,10 +23,10 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
-        DEV_DATABASE_URL: ${{secrets.PROD_DATABASE_URL}}
-        DEV_USERNAME: ${{secrets.PROD_USERNAME}}
-        DEV_PASSWORD: ${{secrets.PROD_PASSWORD}}
-
+        env:  # This is where we define environment variables for this step
+          DEV_DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
+          DEV_USERNAME: ${{ secrets.DEV_USERNAME }}
+          DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}
         run: mvn clean install
 
       - name: Upload artifact for deployment job
@@ -41,18 +41,18 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-      
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'touristGuideV22'
-          slot-name: 'Production'
+          app-name: 'touristGuideV22'  # Ensure this matches your Azure app name
+          slot-name: 'Production'        # Use 'Production' or your desired slot name
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8706AE0A2CD94A28949E1D04A3A548A7 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8706AE0A2CD94A28949E1D04A3A548A7 }}  # Use the secret here
