@@ -1,30 +1,28 @@
-//package org.example.touristguide.repository;
-//
-//import org.example.touristguide.model.Tag;
-//import org.example.touristguide.model.TouristAttraction;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import java.util.Arrays;
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//class TouristRepositoryTest {
-//    private TouristRepository repository = new TouristRepository();
-//
-//    @BeforeEach
-//    void setUp() {
-//        repository = new TouristRepository();
-//        // Optionally: Populate the database with test data here.
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        // Optionally: Clean up the database after each test to ensure isolation.
-//    }
-//
+package org.example.touristguide.repository;
+
+import org.example.touristguide.model.Tag;
+import org.example.touristguide.model.TouristAttraction;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class TouristRepositoryTest {
+    private TouristRepository repository = new TouristRepository();
+
+    @BeforeEach
+    void setUp() {
+        repository = new TouristRepository();
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+
 //    @Test
 //    void getAllAttractions() {
 //        List<TouristAttraction> touristAttractions = repository.getAllAttractions();
@@ -99,4 +97,4 @@
 //        assertTrue(tags.contains("MONUMENT"), "Expected 'MONUMENT' to be in the tags");
 //        assertTrue(tags.contains("HISTORY"), "Expected 'HISTORY' to be in the tags");
 //    }
-//}
+}
