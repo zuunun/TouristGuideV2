@@ -33,7 +33,7 @@ class TouristRepositoryTest {
 
     @Test
     void updateAttraction() {
-        TouristAttraction attraction = new TouristAttraction("Pyramids of Giza", "The Great Pyramids", "Giza");
+        TouristAttraction attraction = new TouristAttraction(1L,"Pyramids of Giza", "The Great Pyramids", "Giza");
         attraction.setDescription("A stunning view of the ancient structures.");
         repository.updateAttraction(attraction);
 
@@ -43,7 +43,7 @@ class TouristRepositoryTest {
 
     @Test
     void saveAttraction() {
-        TouristAttraction attraction = new TouristAttraction("The Sphinx", "A limestone statue of a reclining sphinx", "Giza");
+        TouristAttraction attraction = new TouristAttraction(2L,"The Sphinx", "A limestone statue of a reclining sphinx", "Giza");
         attraction.setTags(Arrays.asList(Tag.HISTORY, Tag.MONUMENT));
         repository.saveAttraction(attraction);
 
@@ -55,7 +55,7 @@ class TouristRepositoryTest {
     @Test
     void saveAttraction_Fail() {
         // Attempting to save a duplicate attraction
-        TouristAttraction duplicateAttraction = new TouristAttraction("Pyramids of Giza", "The iconic pyramids built as tombs for ancient Pharaohs.", "Giza");
+        TouristAttraction duplicateAttraction = new TouristAttraction(3L,"Pyramids of Giza", "The iconic pyramids built as tombs for ancient Pharaohs.", "Giza");
 
         // Expecting an exception to be thrown for duplicate save
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {

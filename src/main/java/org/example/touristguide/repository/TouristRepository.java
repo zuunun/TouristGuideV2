@@ -10,11 +10,11 @@ import java.util.*;
 @Repository
 public class TouristRepository {
 
-    @Value("${spring.datasource.url}")
+    @Value("touristguidev2.mysql.database.azure.com")
     private String dbUrl;
-    @Value("root")
-    private String username;
     @Value("zuzu")
+    private String username;
+    @Value("Zuhurunun123")
     private String password;
 
     // CREATE
