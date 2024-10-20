@@ -14,7 +14,6 @@ public enum Tag {
     FORTRESS("Fortress");
 
 
-
     private final String displayName;
 
     Tag(String displayName) {

@@ -1,116 +1,188 @@
 package org.example.touristguide.repository;
 
-import org.example.touristguide.model.Tag;
 import org.example.touristguide.model.TouristAttraction;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import java.sql.*;
 import java.util.*;
 
 @Repository
 public class TouristRepository {
-    final private List<TouristAttraction> touristAttractions = new ArrayList<>();
 
-    public TouristRepository() {
-        // Tourist attractions in Egypt
-        TouristAttraction t1 = new TouristAttraction(1L,"Pyramids of Giza", "The iconic pyramids built as tombs for ancient Pharaohs.", "Giza");
-        t1.setTags(Arrays.asList(Tag.HISTORY, Tag.UNESCO, Tag.MONUMENT));
-
-        TouristAttraction t2 = new TouristAttraction(2L,"Egyptian Museum", "Houses an extensive collection of ancient Egyptian antiquities.", "Cairo");
-        t2.setTags(Arrays.asList(Tag.MUSEUM,Tag.HISTORY,Tag.FAMOUS));
-
-        TouristAttraction t3 = new TouristAttraction(3L,"Luxor Temple", "A large Ancient Egyptian temple complex located on the east bank of the Nile.", "Luxor");
-        t3.setTags(Arrays.asList( Tag.HISTORY,Tag.TEMPLE, Tag.ANCIENT));
-
-        TouristAttraction t4 = new TouristAttraction(4L,"The Valley of the Kings", "The burial site of many ancient Egyptian Pharaohs.", "Luxor");
-        t4.setTags(Arrays.asList( Tag.HISTORY, Tag.UNESCO,Tag.TOMBS));
-
-        TouristAttraction t5 = new TouristAttraction(5L,"Abu Simbel", "Two massive rock temples built during the reign of Pharaoh Ramses II.", "Aswan");
-        t5.setTags(Arrays.asList( Tag.HISTORY,Tag.UNESCO, Tag.TEMPLE));
-
-        TouristAttraction t6 = new TouristAttraction(6L,"Cairo Citadel", "A medieval Islamic fortification located in Cairo.", "Cairo");
-        t6.setTags(Arrays.asList(Tag.HISTORY, Tag.FORTRESS, Tag.ARCHITECTURE));
-
-        TouristAttraction t7 = new TouristAttraction(7L,"Karnak Temple", "A massive temple complex dedicated to the Theban triad of Amun, Mut, and Khonsu.", "Luxor");
-        t7.setTags(Arrays.asList(Tag.HISTORY, Tag.TEMPLE, Tag.ANCIENT ));
-
-        //add
-        Collections.addAll(touristAttractions, t1, t2, t3, t4, t5, t6, t7);
-    }
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+    @Value("root")
+    private String username;
+    @Value("zuzu")
+    private String password;
 
     // CREATE
-    public void saveAttraction(TouristAttraction t) throws IllegalArgumentException {
-        for(TouristAttraction existingAttraction : touristAttractions){
-            if(existingAttraction.getName().equals(t.getName())){
-                throw new IllegalArgumentException("Attraction already exists");
-            }
+    public void saveAttraction(TouristAttraction attraction) {
+        String sql = "INSERT INTO TouristAttractions (name, description, city_id) VALUES (?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, attraction.getName());
+            statement.setString(2, attraction.getDescription());
+            int cityId = getCityIdByName(attraction.getCity());
+            statement.setInt(3, cityId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        touristAttractions.add(t);
     }
 
-    // READ
+    // READ - Get All Attractions
     public List<TouristAttraction> getAllAttractions() {
-        return touristAttractions;
-    }
+        List<TouristAttraction> attractions = new ArrayList<>();
+        String sql = "SELECT * FROM TouristAttractions";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-    public TouristAttraction getAttractionById(String id){
-        for(TouristAttraction attraction : touristAttractions){
-            if(attraction.getAttractionId().equals(id)){
-                return attraction;
+            while (resultSet.next()) {
+                TouristAttraction attraction = mapToAttraction(resultSet);
+                attractions.add(attraction);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        return attractions;
     }
 
+    // READ - Get Attraction by Name
     public TouristAttraction getAttractionByName(String name) {
-        for (TouristAttraction attraction : touristAttractions) {
-            if (attraction.getName().equals(name)) {
-                return attraction;
+        String sql = "SELECT * FROM TouristAttractions WHERE name = ?";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return mapToAttraction(resultSet);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     // DELETE
     public void deleteAttraction(String name) {
-        Iterator<TouristAttraction> iterator = touristAttractions.iterator();
-        while (iterator.hasNext()) {
-            TouristAttraction t = iterator.next();
-            if (t.getName().equals(name)) {
-                iterator.remove(); // Safe removal
-                return; // Add return to exit once deleted
+        String sql = "DELETE FROM TouristAttractions WHERE name = ?";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, name);
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new NoSuchElementException("Attraction not found");
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        // Handle case where the attraction is not found
-        throw new NoSuchElementException("Attraction not found");
     }
 
+    // UPDATE
+    public void updateAttraction(TouristAttraction updatedAttraction) {
+        String sql = "UPDATE TouristAttractions SET description = ?, city_id = ? WHERE name = ?";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            statement.setString(1, updatedAttraction.getDescription());
+            int cityId = getCityIdByName(updatedAttraction.getCity());
+            statement.setInt(2, cityId);
+            statement.setString(3, updatedAttraction.getName());
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new NoSuchElementException("Attraction not found");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Get City ID by Name
+    private int getCityIdByName(String cityName) {
+        String sql = "SELECT id FROM Cities WHERE name = ?";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, cityName);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new NoSuchElementException("City not found");
+    }
+
+    // Get City Name by ID
+    private String getCityNameById(int cityId) {
+        String sql = "SELECT name FROM Cities WHERE id = ?";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, cityId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("name");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new NoSuchElementException("City not found");
+    }
+
+    // Map ResultSet to TouristAttraction Object
+    private TouristAttraction mapToAttraction(ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("id");
+        String name = resultSet.getString("name");
+        String description = resultSet.getString("description");
+        int cityId = resultSet.getInt("city_id");
+
+        String cityName = getCityNameById(cityId);
+
+        TouristAttraction attraction = new TouristAttraction(id, name, description, cityName);
+        // Note: Set tags if necessary
+        return attraction;
+    }
+
+    // READ - Get all Cities
     public List<String> getCities() {
         List<String> cities = new ArrayList<>();
-        Collections.addAll(cities, "Cairo", "Alexandria", "Luxor", "Aswan", "Giza");
+        String sql = "SELECT name FROM Cities";
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                cities.add(resultSet.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return cities;
     }
 
+    // READ - Get all Tags
     public List<String> getTags() {
-        List<String> tags = new ArrayList<>();
-        for (TouristAttraction t : touristAttractions) {
-            for (Tag tag : t.getTags()) {
-                tags.add(tag.getDisplayName());
-            }
-        }
-        return tags;
-    }
-
-    public void updateAttraction(TouristAttraction updatedAttraction) {
-        for (TouristAttraction attraction : touristAttractions) {
-            if (attraction.getName().equals(updatedAttraction.getName())) {
-                attraction.setDescription(updatedAttraction.getDescription());
-                attraction.setCity(updatedAttraction.getCity());
-                attraction.setTags(updatedAttraction.getTags());
-                return; // Add return to exit once updated
-            }
-        }
-        // Handle case where the attraction is not found
-        throw new NoSuchElementException("Attraction not found");
+        // Placeholder method for getting tags from the database if needed
+        return Collections.emptyList();
     }
 }

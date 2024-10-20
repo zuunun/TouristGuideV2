@@ -2,47 +2,45 @@
 GET http://localhost:8080/attractions
 Accept: application/json
 
-###Save tivoli
+###Save Pyramids of Giza
 POST http://localhost:8080/attractions/save
 Content-Type: application/json
 
 {
-  "name": "Tivoli",
-  "description": "A famous amusement park in Copenhagen.",
-  "city": "Copenhagen",
-  "tags": ["FORLYSTELSE"]
+  "name": "Pyramids of Giza",
+  "description": "The iconic pyramids built as tombs for ancient Pharaohs.",
+  "city": "Giza",
+  "tags": ["HISTORY", "UNESCO", "MONUMENT"]
 }
 
 
 ### Get a specific attraction by name
-GET http://localhost:8080/attractions/Tivoli
+GET http://localhost:8080/attractions/Pyramids%20of%20Giza
 Accept: application/json
 
-### Add Nyhavn
+### Add luxor temple
 POST http://localhost:8080/attractions/save
 Content-Type: application/json
 
 {
-  "name": "Nyhavn",
-  "description": "A beautiful waterfront area in Copenhagen, famous for its colorful houses.",
-  "city": "Copenhagen",
-  "tags": ["FORLYSTELSE", "HISTORIE"]
+  "name": "Luxor Temple",
+  "description": "A large Ancient Egyptian temple complex located on the east bank of the Nile.",
+  "city": "Luxor",
+  "tags": ["HISTORY", "TEMPLE", "ANCIENT"]
 }
 
-
-### Update Nyhavn
+### Update luxor temple
 POST http://localhost:8080/attractions/update
 Content-Type: application/json
 
 {
-  "name": "Nyhavn",
-  "description": "A historic waterfront area in Copenhagen, known for dining and entertainment.",
-  "city": "Copenhagen",
-  "tags": ["FORLYSTELSE", "HISTORIE", "NATUR"]
+  "name": "Luxor Temple",
+  "description": "An ancient temple complex in Luxor, dedicated to the Theban Triad.",
+  "city": "Luxor",
+  "tags": ["HISTORY", "TEMPLE", "ANCIENT", "UNESCO"]
 }
 
 
-### Delete Nyhavn
-POST http://localhost:8080/attractions/delete/Nyhavn
+### Delete luxor temple
+POST http://localhost:8080/attractions/delete/Luxor Temple
 Content-Type: application/json
-

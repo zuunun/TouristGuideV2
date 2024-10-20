@@ -3,6 +3,7 @@ package org.example.touristguide.controller;
 import org.example.touristguide.model.Tag;
 import org.example.touristguide.model.TouristAttraction;
 import org.example.touristguide.service.TouristService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 public class TouristController {
     private final TouristService touristService;
 
+    @Autowired
     public TouristController(TouristService touristService) {
         this.touristService = touristService;
     }
@@ -30,18 +32,17 @@ public class TouristController {
     public String getAttractionByName(@PathVariable String name, Model model) {
         TouristAttraction touristAttraction = touristService.getAttractionByName(name);
         model.addAttribute("attraction", touristAttraction);
-        return "attractionList";
+        return "attractionDetails";
     }
 
-    @GetMapping("/attractions/{name}/tags")
+    @GetMapping("/{name}/tags")
     public String getAttractionTags(@PathVariable String name, Model model) {
         TouristAttraction t = touristService.getAttractionByName(name);
-        List<Tag> tags = touristService.getAttractionByName(name).getTags();
+        List<Tag> tags = t.getTags();
         model.addAttribute("attraction", t);
         model.addAttribute("tags", tags);
         return "tags";
     }
-
 
     @GetMapping("/add")
     public String addAttraction(Model model) {
@@ -58,7 +59,7 @@ public class TouristController {
 
     @PostMapping("/save")
     public String saveAttraction(@ModelAttribute TouristAttraction touristAttraction) {
-        touristService.saveAttraction(touristAttraction); // Save instead of get
+        touristService.saveAttraction(touristAttraction);
         return "redirect:/attractions";
     }
 
@@ -66,23 +67,20 @@ public class TouristController {
     public String editAttraction(@PathVariable String name, Model model) {
         TouristAttraction touristAttraction = touristService.getAttractionByName(name);
         model.addAttribute("attraction", touristAttraction);
-        model.addAttribute("city", touristService.getCities());
-        model.addAttribute("description", touristAttraction.getDescription());
+        model.addAttribute("cities", touristService.getCities());
         model.addAttribute("availableTags", touristService.getTags());
         return "editAttraction";
     }
 
     @PostMapping("/update")
-    public String editAttraction(@ModelAttribute TouristAttraction touristAttraction) {
+    public String updateAttraction(@ModelAttribute TouristAttraction touristAttraction) {
         touristService.updateAttraction(touristAttraction);
         return "redirect:/attractions";
     }
 
     @PostMapping("/delete/{name}")
-    public String deleteAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
-        touristService.deleteAttraction(touristAttraction.getName());
-        model.addAttribute("attraction", touristAttraction);
+    public String deleteAttraction(@PathVariable String name) {
+        touristService.deleteAttraction(name);
         return "redirect:/attractions";
     }
 }
-
