@@ -158,7 +158,6 @@ public class TouristRepository {
         String cityName = getCityNameById(cityId);
 
         TouristAttraction attraction = new TouristAttraction(id, name, description, cityName);
-        // Note: Set tags if necessary
         return attraction;
     }
 
@@ -182,7 +181,6 @@ public class TouristRepository {
 
     // READ - Get all Tags
     public List<String> getTags() {
-        // Placeholder method for getting tags from the database if needed
         return Collections.emptyList();
     }
 }
