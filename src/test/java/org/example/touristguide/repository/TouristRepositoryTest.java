@@ -1,16 +1,17 @@
 package org.example.touristguide.repository;
 
-import org.example.touristguide.model.Tag;
 import org.example.touristguide.model.TouristAttraction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest // Starter hele Spring-konteksten
+//@Transactional
 class TouristRepositoryTest {
     private TouristRepository repository;
 
@@ -24,23 +25,24 @@ class TouristRepositoryTest {
 
 //    @Test
 //    void saveAttraction() {
-//        // Arrange
-//        TouristAttraction t = new TouristAttraction(1L, "Saqqara",
+//        // Arrange - opsætning af en ny turistattraktion
+//        TouristAttraction attraction = new TouristAttraction(1L, "Saqqara",
 //                "Cemetery of ancient Memphis", "Cairo");
-//        t.setTags(Arrays.asList(Tag.HISTORY, Tag.ANCIENT));
 //
-//        // Act
-//        repository.saveAttraction(t);
+//        // Act - gem attraktionen i repository
+//        repository.saveAttraction(attraction);
 //
-//        // Assert
+//        // Assert - verificér, at attraktionen blev gemt korrekt
 //        List<TouristAttraction> attractions = repository.getAllAttractions();
+//        TouristAttraction savedAttraction = attractions.stream()
+//                .filter(a -> "Saqqara".equals(a.getName()))
+//                .findFirst()
+//                .orElse(null);
 //
-//        // Kontrollerer, at antallet af attraktioner er steget med 1
-//        assertEquals(8, attractions.size(), "Expected 8 attractions in the database");
-//
-//        //
-//        TouristAttraction savedAttraction = attractions.get(attractions.size() - 1);
-//        assertEquals("Saqqara", savedAttraction.getName(), "Expected the last attraction's name to be 'Saqqara'");
+//        assertNotNull(savedAttraction, "Attraction should be found in the database");
+//        assertEquals("Saqqara", savedAttraction.getName());
+//        assertEquals("Cemetery of ancient Memphis", savedAttraction.getDescription());
+//        assertEquals("Cairo", savedAttraction.getCity());
 //    }
 
 
