@@ -24,15 +24,25 @@ class TouristRepositoryTest {
 
     @Test
     void saveAttraction() {
-        TouristAttraction t = new TouristAttraction(1L,"Saqqara",
-                "Cemetry of ancient Memphis","Cairo");
-        t.setTags(Arrays.asList(Tag.HISTORY,Tag.ANCIENT));
+        // Arrange
+        TouristAttraction t = new TouristAttraction(1L, "Saqqara",
+                "Cemetery of ancient Memphis", "Cairo");
+        t.setTags(Arrays.asList(Tag.HISTORY, Tag.ANCIENT));
+
+        // Act - Udfør den handling, der skal testes
         repository.saveAttraction(t);
 
+        // Assert - Verificér, at handlingen gav det forventede resultat
         List<TouristAttraction> attractions = repository.getAllAttractions();
-        assertEquals(8, attractions.size()); // Tæller at vi nu har 8 attraktioner
-        assertEquals("Saqqara", attractions.get(5).getName());
+
+        // Kontrollerer, at antallet af attraktioner er steget med 1 (hvis vi forventede 8 i alt efter indsættelsen)
+        assertEquals(8, attractions.size(), "Expected 8 attractions in the database");
+
+        // Kontrollerer, at den sidste indsatte attraktion har det forventede navn
+        TouristAttraction savedAttraction = attractions.get(attractions.size() - 1);
+        assertEquals("Saqqara", savedAttraction.getName(), "Expected the last attraction's name to be 'Saqqara'");
     }
+
 
     @Test
     void getAllAttractions() {
