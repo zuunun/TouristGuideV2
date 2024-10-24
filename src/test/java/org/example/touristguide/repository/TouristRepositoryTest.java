@@ -13,16 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest // Starter hele Spring-konteksten
 //@Transactional
 class TouristRepositoryTest {
-    private TouristRepository repository;
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
+//    private TouristRepository repository;
+//
+//    @BeforeEach
+//    void setUp() {
+//    }
+//
+//    @AfterEach
+//    void tearDown() {
+//    }
+//
 //    @Test
 //    void saveAttraction() {
 //        // Arrange - opsætning af en ny turistattraktion
@@ -44,29 +44,29 @@ class TouristRepositoryTest {
 //        assertEquals("Cemetery of ancient Memphis", savedAttraction.getDescription());
 //        assertEquals("Cairo", savedAttraction.getCity());
 //    }
-
-
-    @Test
-    void getAllAttractions() {
-    }
-
-    @Test
-    void getAttractionByName() {
-    }
-
-    @Test
-    void deleteAttraction() {
-    }
-
-    @Test
-    void updateAttraction() {
-    }
-
-    @Test
-    void getCities() {
-    }
-
-    @Test
-    void getTags() {
-    }
+//
+//
+//    @Test
+//    void getAllAttractions() {
+//    }
+//
+//    @Test
+//    void getAttractionByName() {
+//    }
+//
+//    @Test
+//    void deleteAttraction() {
+//    }
+//
+//    @Test
+//    void updateAttraction() {
+//    }
+//
+//    @Test
+//    void getCities() {
+//    }
+//
+//    @Test
+//    void getTags() {
+//    }
 }
